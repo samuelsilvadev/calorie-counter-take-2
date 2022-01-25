@@ -33,4 +33,4 @@ const foodsSlice = createSlice({
 export const { getAllFoods, getAllFoodsOK, getAllFoodsError } =
   foodsSlice.actions;
 
-export default foodsSlice.reducer;
+export const foodsReducer = foodsSlice.reducer;
