@@ -1,5 +1,12 @@
+import { BrowserRouter, Route } from "react-router-dom";
+import Foods from "foods/Foods";
+
 function App() {
-  return <h1>Create React App N</h1>;
+  return (
+    <BrowserRouter>
+      <Route path="/" component={Foods} />
+    </BrowserRouter>
+  );
 }
 
 export default App;
