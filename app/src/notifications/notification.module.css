@@ -1,0 +1,23 @@
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: #fff;
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.success {
+  background-color: #0ac39b;
+}
+
+.error {
+  background-color: #f45f5e;
+}
+
+.message {
+  margin: 0;
+}
