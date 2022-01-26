@@ -1,0 +1,20 @@
+.wrapper {
+  padding: 12px 10px;
+}
+
+.title,
+.subtitle {
+  flex: 1 0 50%;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+}

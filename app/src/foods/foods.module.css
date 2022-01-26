@@ -1,0 +1,50 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, auto);
+  row-gap: 20px;
+}
+
+.title {
+  margin: 0;
+}
+
+.searchForm {
+  display: flex;
+  grid-row: 2 / 3;
+  grid-column: 1 / -1;
+}
+
+.input {
+  flex-basis: 50%;
+  margin-right: 10px;
+}
+
+.button {
+  background-color: #fff;
+  grid-column: 2 / 3;
+  padding: 12px 10px;
+  border: 1px solid #bbc3cc;
+  color: #bbc3cc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+  background-color: #bbc3cc;
+  color: #fff;
+}
+
+.listOfFoods {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #bbc3cc;
+  border-radius: 5px;
+}
+
+.foodListItem:not(:last-child) {
+  border-bottom: 1px solid #bbc3cc;
+}
