@@ -1,4 +1,4 @@
-import CloseInCircle from "shared/components/CloseInCircle";
+import CloseInCircle from "shared/components/icons/CloseInCircle";
 import Check from "shared/components/icons/Check";
 import styles from "./notification.module.css";
 
