@@ -1,10 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { Food, GetAllFoodsAPIResponseError } from "./types";
 
 type FoodsState = {
-  error: Error | null;
+  error: GetAllFoodsAPIResponseError | null;
   loading: boolean;
-  foods: [];
+  foods: Food[];
 };
+
+export type GetAllFoodsOkAction = PayloadAction<{ foods: Food[] }>;
+export type GetAllFoodsErrorAction = PayloadAction<GetAllFoodsAPIResponseError>;
 
 const initialState: FoodsState = {
   error: null,
@@ -19,13 +23,13 @@ const foodsSlice = createSlice({
     getAllFoods: (state: FoodsState) => {
       state.loading = true;
     },
-    getAllFoodsOK: (state: FoodsState, action) => {
+    getAllFoodsOK: (state: FoodsState, action: GetAllFoodsOkAction) => {
       state.loading = false;
       state.foods = action.payload.foods;
     },
-    getAllFoodsError: (state: FoodsState, action) => {
+    getAllFoodsError: (state: FoodsState, action: GetAllFoodsErrorAction) => {
       state.loading = false;
-      state.error = action.payload.error;
+      state.error = action.payload;
     },
   },
 });

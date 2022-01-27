@@ -1,4 +1,6 @@
-// eslint-disable-next-line require-yield
+import { all } from "redux-saga/effects";
+import { foodsWatcher } from "foods/sagas";
+
 export function* rootSaga() {
-  console.log("Bootstrapping rootSaga");
+  yield all([foodsWatcher()]);
 }

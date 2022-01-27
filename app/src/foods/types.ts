@@ -1,3 +1,24 @@
+type GetAllFoodsAPIResponseCommon = {
+  error: boolean;
+  responseTimestamp: string;
+  status: boolean;
+  statusCode: number;
+};
+
+export type GetAllFoodsAPIResponseOk = {
+  data: Food[];
+  totalCount: number;
+} & GetAllFoodsAPIResponseCommon;
+
+export type GetAllFoodsAPIResponseError = {
+  message: string;
+  name: string;
+} & GetAllFoodsAPIResponseCommon;
+
+export type GetAllFoodsAPIResponse =
+  | GetAllFoodsAPIResponseOk
+  | GetAllFoodsAPIResponseError;
+
 export type Food = {
   id: string;
   createdBy: string;
