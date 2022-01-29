@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  height: 80px;
+  width: 100%;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #bbc3cc;
+}
+
+.header,
+.container {
+  padding: 0 20px;
+}
+
+.addButton {
+  background-color: #2548e2;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  align-self: center;
+  padding: 8px 15px;
+}
