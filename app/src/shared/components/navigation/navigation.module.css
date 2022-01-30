@@ -37,8 +37,15 @@
   width: 50px;
 }
 
-.text {
-  display: none;
+@media (max-width: 767px) {
+  .text {
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    position: absolute;
+  }
 }
 
 @media (min-width: 768px) {
