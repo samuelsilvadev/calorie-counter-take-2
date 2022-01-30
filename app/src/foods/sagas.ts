@@ -1,4 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
+import { GetAllError } from "shared/types/api";
+import { identityError } from "shared/utils/error";
 import { fetchAllFoods } from "./api";
 import {
   getAllFoods,
@@ -6,10 +8,7 @@ import {
   getAllFoodsOK,
   GetAllFoodsOkAction,
 } from "./state";
-import type {
-  GetAllFoodsAPIResponse,
-  GetAllFoodsAPIResponseError,
-} from "./types";
+import type { GetAllFoodsAPIResponse } from "./types";
 
 function* getAllFoodsSaga() {
   try {
@@ -24,7 +23,13 @@ function* getAllFoodsSaga() {
     };
     yield put(getAllFoodsOK(payload));
   } catch (error) {
-    yield put(getAllFoodsError(error as GetAllFoodsAPIResponseError));
+    const composedError: GetAllError | Error = error as any;
+    const finalError: GetAllError =
+      composedError instanceof Error
+        ? identityError(composedError)
+        : composedError;
+
+    yield put(getAllFoodsError(finalError));
   }
 }
 

@@ -1,23 +1,11 @@
-type GetAllFoodsAPIResponseCommon = {
-  error: boolean;
-  responseTimestamp: string;
-  status: boolean;
-  statusCode: number;
-};
+import type { GetAllCommon, GetAllError } from "shared/types/api";
 
 export type GetAllFoodsAPIResponseOk = {
   data: Food[];
   totalCount: number;
-} & GetAllFoodsAPIResponseCommon;
+} & GetAllCommon;
 
-export type GetAllFoodsAPIResponseError = {
-  message: string;
-  name: string;
-} & GetAllFoodsAPIResponseCommon;
-
-export type GetAllFoodsAPIResponse =
-  | GetAllFoodsAPIResponseOk
-  | GetAllFoodsAPIResponseError;
+export type GetAllFoodsAPIResponse = GetAllFoodsAPIResponseOk | GetAllError;
 
 export type Food = {
   id: string;
