@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import ContentManager from "shared/components/content-manager/ContentManager";
 import FoodItem from "./components/FoodItem/FoodItem";
 import SearchInput from "./components/SearchInput/SearchInput";
 import { useFoods } from "./useFoods";
@@ -8,6 +9,7 @@ function Foods() {
   const {
     loading,
     foods,
+    error,
     actions: { getAllFoods },
   } = useFoods();
 
@@ -22,9 +24,11 @@ function Foods() {
         <SearchInput className={styles.input} />
         <button className={styles.button}>Search</button>
       </form>
-      {loading ? (
-        <p className={styles.loading}>Loading...</p>
-      ) : (
+      <ContentManager
+        className={styles.loadingAndError}
+        loading={loading}
+        error={error}
+      >
         <ul className={styles.listOfFoods}>
           {foods.map((food) => (
             <li className={styles.foodListItem} key={food.id}>
@@ -32,7 +36,7 @@ function Foods() {
             </li>
           ))}
         </ul>
-      )}
+      </ContentManager>
     </section>
   );
 }

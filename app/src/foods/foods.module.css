@@ -45,10 +45,8 @@
   border-radius: 5px;
 }
 
-.loading {
+.loadingAndError {
   grid-column: 1 / -1;
-  text-align: center;
-  margin: 0;
 }
 
 .foodListItem:not(:last-child) {
