@@ -5,7 +5,7 @@ import styles from "./contentManager.module.css";
 type ContentManagerProps = {
   loading: boolean;
   error: GetAllError | null;
-  children: React.ReactElement;
+  children?: React.ReactElement;
   className?: string;
 };
 
@@ -14,7 +14,7 @@ function ContentManager({
   error,
   children,
   className,
-}: ContentManagerProps): JSX.Element {
+}: ContentManagerProps): JSX.Element | null {
   if (loading) {
     return <p className={classnames(styles.loading, className)}>Loading...</p>;
   }
@@ -25,7 +25,7 @@ function ContentManager({
     );
   }
 
-  return children;
+  return children || null;
 }
 
 export default ContentManager;
