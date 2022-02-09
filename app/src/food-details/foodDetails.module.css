@@ -1,0 +1,60 @@
+.background {
+  background-color: rgb(234 215 215 / 0%);
+  backdrop-filter: blur(5px);
+  position: fixed;
+  inset: 0;
+}
+
+.content {
+  background-color: #fff;
+  border: 2px solid #bbc3cc;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.foodDetails {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #bbc3cc;
+}
+
+.form {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  row-gap: 10px;
+}
+
+.input {
+  padding: 12px 10px;
+}
+
+.button {
+  background-color: #fff;
+  padding: 12px 10px;
+  border: 1px solid #bbc3cc;
+  color: #bbc3cc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+  background-color: #bbc3cc;
+  color: #fff;
+}
+
+.calculatedCalories {
+  text-align: center;
+  margin: 10px 0;
+}
