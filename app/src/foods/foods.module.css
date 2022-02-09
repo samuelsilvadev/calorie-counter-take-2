@@ -49,6 +49,13 @@
   grid-column: 1 / -1;
 }
 
+.foodListItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 10px;
+}
+
 .foodListItem:not(:last-child) {
   border-bottom: 1px solid #bbc3cc;
 }
