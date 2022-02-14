@@ -1,5 +1,6 @@
 export const ENDPOINTS = {
   FOODS: "/foods",
+  USERS: "/users",
 };
 
 export function api(endpoint: string) {

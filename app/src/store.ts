@@ -5,6 +5,7 @@ import createSagaMiddleware from "redux-saga";
 import { foodsReducer } from "foods/state";
 import { notificationsReducer } from "notifications/state";
 import { foodDetailsReducer } from "food-details/state";
+import { userReducer } from "user/state";
 import { rootSaga } from "rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -14,6 +15,7 @@ export const store = configureStore({
     foods: foodsReducer,
     food: foodDetailsReducer,
     notifications: notificationsReducer,
+    user: userReducer,
   },
   middleware: [sagaMiddleware],
 });

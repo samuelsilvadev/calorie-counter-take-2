@@ -1,5 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { GetAllError } from "shared/types/api";
+import { ENDPOINTS } from "shared/utils/api";
 import { identityError } from "shared/utils/error";
 import { fetchAllFoods } from "./api";
 import {
@@ -26,7 +27,7 @@ function* getAllFoodsSaga() {
     const composedError: GetAllError | Error = error as any;
     const finalError: GetAllError =
       composedError instanceof Error
-        ? identityError(composedError)
+        ? identityError(composedError, ENDPOINTS.FOODS)
         : composedError;
 
     yield put(getAllFoodsError(finalError));

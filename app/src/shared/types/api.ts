@@ -9,3 +9,10 @@ export type GetAllError = {
   message: string;
   name: string;
 } & GetAllCommon;
+
+export type GetAllErrorFE = {
+  /**
+   * Describe which endpoint failed
+   */
+  resource: string;
+} & GetAllError;

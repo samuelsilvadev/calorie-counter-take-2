@@ -1,14 +1,15 @@
-import type { GetAllError } from "shared/types/api";
+import type { GetAllErrorFE } from "shared/types/api";
 
-export function identityError(error: Error): GetAllError {
+export function identityError(error: Error, resource: string): GetAllErrorFE {
   if (error.name === "TypeError" && error.message === "Failed to fetch") {
     return {
-      message: "Something went wrong while fetching your foods.",
+      message: "Something went wrong while fetching the data.",
       name: "FetchError",
       error: true,
       responseTimestamp: Date.now().toString(),
       status: true,
       statusCode: 500,
+      resource,
     };
   }
 
@@ -19,5 +20,6 @@ export function identityError(error: Error): GetAllError {
     responseTimestamp: Date.now().toString(),
     status: true,
     statusCode: 500,
+    resource,
   };
 }
