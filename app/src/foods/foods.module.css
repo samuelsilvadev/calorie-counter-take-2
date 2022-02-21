@@ -31,9 +31,16 @@
 }
 
 .button:hover,
-.button:focus {
+.button:focus,
+.favorite {
   background-color: #bbc3cc;
   color: #fff;
+}
+
+.favorite:hover,
+.favorite:focus {
+  background-color: #fff;
+  color: #bbc3cc;
 }
 
 .listOfFoods {
@@ -54,6 +61,7 @@
   justify-content: space-between;
   align-items: center;
   padding-right: 10px;
+  gap: 10px;
 }
 
 .foodListItem:not(:last-child) {
