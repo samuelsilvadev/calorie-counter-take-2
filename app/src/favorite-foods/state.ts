@@ -1,30 +1,46 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GetAllErrorFE } from "shared/types/api";
+import { GetAllErrorFE, RemoveErrorFE, SaveErrorFE } from "shared/types/api";
 import { FavoriteFood } from "./types";
 
 type SaveFavoriteFoodState = {
   loading: boolean;
-  error: GetAllErrorFE | null;
+  error: GetAllErrorFE | SaveErrorFE | RemoveErrorFE | null;
   favorites: Record<string, boolean>;
+  synchronizedFavorites: Record<string, FavoriteFood>;
 };
 
 export type GetAllFavoriteFoodsOkAction = PayloadAction<{
-  foodIds: FavoriteFood[];
+  foods: FavoriteFood[];
 }>;
 export type GetAllFavoriteFoodsErrorAction = PayloadAction<{
   error: GetAllErrorFE;
 }>;
+
 export type SaveFavoriteFoodsAction = PayloadAction<{ foodId: string }>;
-export type SaveFavoriteFoodsOkAction = PayloadAction<{ foodId: string }>;
+export type SaveFavoriteFoodsOkAction = PayloadAction<{
+  favoriteFood: FavoriteFood;
+}>;
 export type SaveFavoriteFoodsErrorAction = PayloadAction<{
   foodId: string;
-  error: GetAllErrorFE;
+  error: SaveErrorFE;
+}>;
+
+export type RemoveFavoriteFoodsAction = PayloadAction<{
+  foodId: string;
+}>;
+export type RemoveFavoriteFoodsOkAction = PayloadAction<{
+  favoriteFood: FavoriteFood;
+}>;
+export type RemoveFavoriteFoodsErrorAction = PayloadAction<{
+  foodId: string;
+  error: RemoveErrorFE;
 }>;
 
 const saveInitialState: SaveFavoriteFoodState = {
   loading: false,
   error: null,
   favorites: {},
+  synchronizedFavorites: {},
 };
 
 const saveFavoriteFoodReducer: CaseReducer<
@@ -38,22 +54,24 @@ const saveFavoriteFoodReducer: CaseReducer<
   favoriteFoodsState.favorites[foodId] = true;
 };
 
-const saveFavoriteFoodSlice = createSlice({
-  name: "saveFavoriteFood",
+const favoriteFoodSlice = createSlice({
+  name: "favoriteFoods",
   initialState: saveInitialState,
   reducers: {
     saveFavoriteFood: saveFavoriteFoodReducer,
     saveFavoriteFoodOK: (
-      favoriteFoodsState: SaveFavoriteFoodState,
+      favoriteFoodsState,
       action: SaveFavoriteFoodsOkAction
     ) => {
-      const { foodId } = action.payload;
+      const { favoriteFood } = action.payload;
 
       favoriteFoodsState.loading = false;
-      favoriteFoodsState.favorites[foodId] = true;
+      favoriteFoodsState.favorites[favoriteFood.food] = true;
+      favoriteFoodsState.synchronizedFavorites[favoriteFood.food] =
+        favoriteFood;
     },
     saveFavoriteFoodError: (
-      favoriteFoodsState: SaveFavoriteFoodState,
+      favoriteFoodsState,
       action: SaveFavoriteFoodsErrorAction
     ) => {
       const { foodId, error } = action.payload;
@@ -62,18 +80,52 @@ const saveFavoriteFoodSlice = createSlice({
       favoriteFoodsState.favorites[foodId] = false;
       favoriteFoodsState.error = error;
     },
+    removeFavoriteFood: (
+      favoriteFoodsState,
+      action: RemoveFavoriteFoodsAction
+    ) => {
+      favoriteFoodsState.loading = true;
+      favoriteFoodsState.favorites[action.payload.foodId] = false;
+    },
+    removeFavoriteFoodOK: (
+      favoriteFoodsState,
+      action: RemoveFavoriteFoodsOkAction
+    ) => {
+      const {
+        favoriteFood: { food: foodId },
+      } = action.payload;
+
+      favoriteFoodsState.loading = false;
+      favoriteFoodsState.favorites[foodId] = false;
+
+      delete favoriteFoodsState.synchronizedFavorites[foodId];
+    },
+    removeFavoriteFoodError: (
+      favoriteFoodsState,
+      action: RemoveFavoriteFoodsErrorAction
+    ) => {
+      const { foodId, error } = action.payload;
+
+      favoriteFoodsState.loading = false;
+      favoriteFoodsState.favorites[foodId] = true;
+      favoriteFoodsState.error = error;
+
+      delete favoriteFoodsState.synchronizedFavorites[foodId];
+    },
     getAllFavoriteFoodsOK: (
-      favoriteFoodsState: SaveFavoriteFoodState,
+      favoriteFoodsState,
       action: GetAllFavoriteFoodsOkAction
     ) => {
       favoriteFoodsState.loading = false;
 
-      action.payload.foodIds.forEach((favoriteFood) => {
+      action.payload.foods.forEach((favoriteFood) => {
         favoriteFoodsState.favorites[favoriteFood.food] = true;
+        favoriteFoodsState.synchronizedFavorites[favoriteFood.food] =
+          favoriteFood;
       });
     },
     getAllFavoriteFoodsError: (
-      favoriteFoodsState: SaveFavoriteFoodState,
+      favoriteFoodsState,
       action: GetAllFavoriteFoodsErrorAction
     ) => {
       favoriteFoodsState.loading = false;
@@ -88,6 +140,9 @@ export const {
   saveFavoriteFoodError,
   getAllFavoriteFoodsOK,
   getAllFavoriteFoodsError,
-} = saveFavoriteFoodSlice.actions;
+  removeFavoriteFood,
+  removeFavoriteFoodOK,
+  removeFavoriteFoodError,
+} = favoriteFoodSlice.actions;
 
-export const favoriteFoodsReducer = saveFavoriteFoodSlice.reducer;
+export const favoriteFoodsReducer = favoriteFoodSlice.reducer;

@@ -18,3 +18,4 @@ export type GetAllErrorFE = {
 } & GetAllError;
 
 export type SaveErrorFE = GetAllErrorFE;
+export type RemoveErrorFE = GetAllErrorFE;

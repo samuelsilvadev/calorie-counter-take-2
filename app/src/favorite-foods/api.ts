@@ -1,6 +1,8 @@
 import { api, ENDPOINTS } from "shared/utils/api";
 import type {
   GetAllFavoritesAPIResponse,
+  RemoveFavoriteFoodAPIResponse,
+  RemoveFavoriteFoodAPIResponseOk,
   SaveFavoriteFoodAPIResponse,
   SaveFavoriteFoodAPIResponseOk,
 } from "./types";
@@ -35,6 +37,25 @@ export async function postFavoriteFood(
       },
     });
     const parsedResponse: SaveFavoriteFoodAPIResponseOk = await response.json();
+
+    return parsedResponse;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteFavoriteFood(
+  favoriteFoodId: string
+): Promise<RemoveFavoriteFoodAPIResponse> {
+  try {
+    const response = await fetch(
+      api(`${ENDPOINTS.FAVORITE_FOODS}/${favoriteFoodId}`),
+      {
+        method: "DELETE",
+      }
+    );
+    const parsedResponse: RemoveFavoriteFoodAPIResponseOk =
+      await response.json();
 
     return parsedResponse;
   } catch (error) {

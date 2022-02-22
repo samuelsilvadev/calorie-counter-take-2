@@ -35,3 +35,20 @@ export type SaveFavoriteFoodAPIResponseError = {
 export type SaveFavoriteFoodAPIResponse =
   | SaveFavoriteFoodAPIResponseOk
   | SaveFavoriteFoodAPIResponseError;
+
+export type RemoveFavoriteFoodAPIResponseOk = {
+  data: FavoriteFood;
+};
+
+export type RemoveFavoriteFoodAPIResponseError = {
+  error: boolean;
+  responseTimestamp: string;
+  name: string;
+  message: string;
+  statusCode: number;
+  errors: Record<string, string>;
+};
+
+export type RemoveFavoriteFoodAPIResponse =
+  | RemoveFavoriteFoodAPIResponseOk
+  | RemoveFavoriteFoodAPIResponseError;

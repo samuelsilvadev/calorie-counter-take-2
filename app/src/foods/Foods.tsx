@@ -18,7 +18,7 @@ function Foods() {
   } = useFoods();
   const {
     favorites,
-    actions: { saveFavoriteFood },
+    actions: { saveFavoriteFood, removeFavoriteFood },
   } = useFavoriteFoods();
 
   useEffect(() => {
@@ -53,7 +53,11 @@ function Foods() {
                       ? `Uncheck ${food.name} from favorites list`
                       : `Mark ${food.name} as favorite`
                   }
-                  onClick={() => saveFavoriteFood(food.id)}
+                  onClick={() => {
+                    isFavorite
+                      ? removeFavoriteFood(food.id)
+                      : saveFavoriteFood(food.id);
+                  }}
                 >
                   {isFavorite ? "✭" : "☆"}
                 </button>

@@ -9,16 +9,26 @@ import {
   SaveFavoriteFoodsOkAction,
   getAllFavoriteFoodsOK,
   getAllFavoriteFoodsError,
+  removeFavoriteFood,
+  RemoveFavoriteFoodsAction,
+  removeFavoriteFoodOK,
 } from "./state";
-import { getFavoriteFoodsByUser, postFavoriteFood } from "./api";
+import {
+  getFavoriteFoodsByUser,
+  postFavoriteFood,
+  deleteFavoriteFood,
+} from "./api";
 import { RootState } from "store";
 import {
+  FavoriteFood,
   GetAllFavoritesAPIResponse,
+  RemoveFavoriteFoodAPIResponse,
+  RemoveFavoriteFoodAPIResponseError,
   SaveFavoriteFoodAPIResponse,
   SaveFavoriteFoodAPIResponseError,
 } from "./types";
 import { ENDPOINTS } from "shared/utils/api";
-import type { GetAllError, SaveErrorFE } from "shared/types/api";
+import type { GetAllError, RemoveErrorFE, SaveErrorFE } from "shared/types/api";
 import { getUserOk, GetUserOkAction } from "user/state";
 
 function* getFavoriteFoodsByUserSaga(action: GetUserOkAction) {
@@ -32,7 +42,7 @@ function* getFavoriteFoodsByUserSaga(action: GetUserOkAction) {
       throw response;
     }
 
-    yield put(getAllFavoriteFoodsOK({ foodIds: response.data }));
+    yield put(getAllFavoriteFoodsOK({ foods: response.data }));
   } catch (error) {
     const safeError: GetAllError = error as any;
     const enhancedError: SaveErrorFE = {
@@ -66,7 +76,7 @@ function* saveFavoriteFoodsSaga(action: SaveFavoriteFoodsAction) {
       throw response;
     }
 
-    yield put(saveFavoriteFoodOK({ foodId }));
+    yield put(saveFavoriteFoodOK({ favoriteFood: response.data }));
   } catch (error) {
     const safeError: SaveFavoriteFoodAPIResponseError = error as any;
     const enhancedError: SaveErrorFE = {
@@ -80,19 +90,50 @@ function* saveFavoriteFoodsSaga(action: SaveFavoriteFoodsAction) {
 }
 
 function* includeSuccessNotification(action: SaveFavoriteFoodsOkAction) {
-  const { foodId } = action.payload;
+  const { favoriteFood } = action.payload;
 
   yield put(
     add({
       notification: {
-        id: foodId,
-        message: `Selected food was added to the favorites list`,
+        id: favoriteFood.food,
+        message: "Selected food was added to the favorites list",
         type: "success",
       },
     })
   );
   yield delay(3000);
-  yield put(remove({ id: foodId }));
+  yield put(remove({ id: favoriteFood.food }));
+}
+
+function* removeFavoriteFoodsSaga(action: RemoveFavoriteFoodsAction) {
+  const { foodId } = action.payload;
+
+  const synchronizedFavorites: Record<string, FavoriteFood> = yield select(
+    (state: RootState) => state.favoriteFoods.synchronizedFavorites
+  );
+  const favoriteFood = synchronizedFavorites[foodId];
+
+  try {
+    const response: RemoveFavoriteFoodAPIResponse = yield call(
+      deleteFavoriteFood,
+      favoriteFood.id
+    );
+
+    if ("errors" in response) {
+      throw response;
+    }
+
+    yield put(removeFavoriteFoodOK({ favoriteFood }));
+  } catch (error) {
+    const safeError: RemoveFavoriteFoodAPIResponseError = error as any;
+    const enhancedError: RemoveErrorFE = {
+      ...safeError,
+      status: true,
+      resource: ENDPOINTS.FAVORITE_FOODS,
+    };
+
+    yield put(saveFavoriteFoodError({ foodId, error: enhancedError }));
+  }
 }
 
 function* includeErrorNotification(action: SaveFavoriteFoodsErrorAction) {
@@ -116,4 +157,5 @@ export function* saveFavoriteFoodWatcher() {
   yield takeEvery(saveFavoriteFood.type, saveFavoriteFoodsSaga);
   yield takeEvery(saveFavoriteFoodOK.type, includeSuccessNotification);
   yield takeEvery(saveFavoriteFoodError, includeErrorNotification);
+  yield takeEvery(removeFavoriteFood.type, removeFavoriteFoodsSaga);
 }
