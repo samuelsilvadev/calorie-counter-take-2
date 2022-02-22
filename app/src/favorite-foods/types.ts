@@ -1,11 +1,26 @@
+import type { GetAllCommon, GetAllError } from "shared/types/api";
+
+export type FavoriteFood = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  food: string;
+  user: string;
+};
+
+export type GetAllFavoritesAPIResponseError = GetAllError;
+
+export type GetAllFavoritesAPIResponseOK = {
+  data: FavoriteFood[];
+  totalCount: number;
+} & GetAllCommon;
+
+export type GetAllFavoritesAPIResponse =
+  | GetAllFavoritesAPIResponseOK
+  | GetAllFavoritesAPIResponseError;
+
 export type SaveFavoriteFoodAPIResponseOk = {
-  data: {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    food: string;
-    user: string;
-  };
+  data: FavoriteFood;
 };
 
 export type SaveFavoriteFoodAPIResponseError = {

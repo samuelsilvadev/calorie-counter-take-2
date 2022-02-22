@@ -5,9 +5,7 @@ import { useSafeDispatch, useSafeSelector } from "store";
 
 export function useFavoriteFoods() {
   const dispatch = useSafeDispatch();
-  const favorites = useSafeSelector(
-    (state) => state.favoriteFoods.save.favorites
-  );
+  const favorites = useSafeSelector((state) => state.favoriteFoods.favorites);
 
   const actions = useMemo(
     () =>

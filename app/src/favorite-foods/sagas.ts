@@ -7,15 +7,43 @@ import {
   SaveFavoriteFoodsAction,
   SaveFavoriteFoodsErrorAction,
   SaveFavoriteFoodsOkAction,
+  getAllFavoriteFoodsOK,
+  getAllFavoriteFoodsError,
 } from "./state";
-import { postFavoriteFood } from "./api";
+import { getFavoriteFoodsByUser, postFavoriteFood } from "./api";
 import { RootState } from "store";
 import {
+  GetAllFavoritesAPIResponse,
   SaveFavoriteFoodAPIResponse,
   SaveFavoriteFoodAPIResponseError,
 } from "./types";
 import { ENDPOINTS } from "shared/utils/api";
-import type { SaveErrorFE } from "shared/types/api";
+import type { GetAllError, SaveErrorFE } from "shared/types/api";
+import { getUserOk, GetUserOkAction } from "user/state";
+
+function* getFavoriteFoodsByUserSaga(action: GetUserOkAction) {
+  try {
+    const response: GetAllFavoritesAPIResponse = yield call(
+      getFavoriteFoodsByUser,
+      action.payload.user.id
+    );
+
+    if (!("data" in response)) {
+      throw response;
+    }
+
+    yield put(getAllFavoriteFoodsOK({ foodIds: response.data }));
+  } catch (error) {
+    const safeError: GetAllError = error as any;
+    const enhancedError: SaveErrorFE = {
+      ...safeError,
+      status: true,
+      resource: ENDPOINTS.FAVORITE_FOODS,
+    };
+
+    yield put(getAllFavoriteFoodsError({ error: enhancedError }));
+  }
+}
 
 function* saveFavoriteFoodsSaga(action: SaveFavoriteFoodsAction) {
   const { foodId } = action.payload;
@@ -80,6 +108,7 @@ function* includeErrorNotification(action: SaveFavoriteFoodsErrorAction) {
 }
 
 export function* saveFavoriteFoodWatcher() {
+  yield takeEvery(getUserOk.type, getFavoriteFoodsByUserSaga);
   yield takeEvery(saveFavoriteFood.type, saveFavoriteFoodsSaga);
   yield takeEvery(saveFavoriteFoodOK.type, includeSuccessNotification);
   yield takeEvery(saveFavoriteFoodError, includeErrorNotification);
