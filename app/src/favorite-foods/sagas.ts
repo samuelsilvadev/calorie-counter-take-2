@@ -1,5 +1,5 @@
-import { call, put, select, takeEvery } from "redux-saga/effects";
-import { add } from "notifications/state";
+import { call, delay, put, select, takeEvery } from "redux-saga/effects";
+import { add, remove } from "notifications/state";
 import {
   saveFavoriteFood,
   saveFavoriteFoodError,
@@ -91,6 +91,8 @@ function* includeSuccessNotification(action: SaveFavoriteFoodsOkAction) {
       },
     })
   );
+  yield delay(3000);
+  yield put(remove({ id: foodId }));
 }
 
 function* includeErrorNotification(action: SaveFavoriteFoodsErrorAction) {
@@ -105,6 +107,8 @@ function* includeErrorNotification(action: SaveFavoriteFoodsErrorAction) {
       },
     })
   );
+  yield delay(3000);
+  yield put(remove({ id: foodId }));
 }
 
 export function* saveFavoriteFoodWatcher() {
