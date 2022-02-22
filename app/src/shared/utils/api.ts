@@ -1,5 +1,6 @@
 export const ENDPOINTS = {
   FOODS: "/foods",
+  FAVORITE_FOODS: "/favorite-foods",
   USERS: "/users",
 };
 

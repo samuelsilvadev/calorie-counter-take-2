@@ -1,5 +1,5 @@
-import { add } from "notifications/state";
 import { call, put, takeEvery } from "redux-saga/effects";
+import { add } from "notifications/state";
 import type { GetAllErrorFE } from "shared/types/api";
 import { ENDPOINTS } from "shared/utils/api";
 import { identityError } from "shared/utils/error";

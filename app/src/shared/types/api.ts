@@ -16,3 +16,5 @@ export type GetAllErrorFE = {
    */
   resource: string;
 } & GetAllError;
+
+export type SaveErrorFE = GetAllErrorFE;

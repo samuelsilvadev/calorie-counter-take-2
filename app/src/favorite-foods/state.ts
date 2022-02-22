@@ -58,8 +58,9 @@ type SaveFavoriteFoodState = {
   favorites: Record<string, boolean>;
 };
 
-type SaveFavoriteFoodsOkAction = PayloadAction<{ food: Food }>;
-type SaveFavoriteFoodsErrorAction = PayloadAction<{
+export type SaveFavoriteFoodsAction = PayloadAction<{ foodId: string }>;
+export type SaveFavoriteFoodsOkAction = PayloadAction<{ foodId: string }>;
+export type SaveFavoriteFoodsErrorAction = PayloadAction<{
   foodId: string;
   error: GetAllErrorFE;
 }>;
@@ -72,7 +73,7 @@ const saveInitialState: SaveFavoriteFoodState = {
 
 const saveFavoriteFoodReducer: CaseReducer<
   SaveFavoriteFoodState,
-  PayloadAction<{ foodId: string }>
+  SaveFavoriteFoodsAction
 > = (favoriteFoodsState, action) => {
   const { foodId } = action.payload;
 
@@ -90,10 +91,10 @@ const saveFavoriteFoodSlice = createSlice({
       favoriteFoodsState: SaveFavoriteFoodState,
       action: SaveFavoriteFoodsOkAction
     ) => {
-      const { food } = action.payload;
+      const { foodId } = action.payload;
 
       favoriteFoodsState.loading = false;
-      favoriteFoodsState.favorites[food.id] = true;
+      favoriteFoodsState.favorites[foodId] = true;
     },
     saveFavoriteFoodError: (
       favoriteFoodsState: SaveFavoriteFoodState,
