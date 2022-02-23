@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import classnames from "classnames";
 import { useFormik } from "formik";
@@ -21,19 +21,24 @@ function Foods() {
     favorites,
     actions: { saveFavoriteFood, removeFavoriteFood },
   } = useFavoriteFoods();
+  const [searchTerm, setSearchTerm] = useState<string>();
 
   const formik = useFormik({
     initialValues: {
       search: "",
     },
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+      setSearchTerm(values.search);
     },
   });
 
   useEffect(() => {
     getAllFoods();
   }, [getAllFoods]);
+
+  const filteredFoods = foods.filter((food) =>
+    food.name.toLowerCase().includes(searchTerm?.toLowerCase() ?? "")
+  );
 
   return (
     <section className={styles.wrapper}>
@@ -55,7 +60,7 @@ function Foods() {
         error={error}
       >
         <ul className={styles.listOfFoods}>
-          {foods.map((food) => {
+          {filteredFoods.map((food) => {
             const isFavorite = !!favorites[food.id];
 
             return (
