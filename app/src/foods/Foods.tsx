@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import classnames from "classnames";
+import { useFormik } from "formik";
 import ContentManager from "shared/components/content-manager/ContentManager";
 import FoodItem from "./components/FoodItem/FoodItem";
 import SearchInput from "./components/SearchInput/SearchInput";
@@ -21,6 +22,15 @@ function Foods() {
     actions: { saveFavoriteFood, removeFavoriteFood },
   } = useFavoriteFoods();
 
+  const formik = useFormik({
+    initialValues: {
+      search: "",
+    },
+    onSubmit: (values) => {
+      console.log(JSON.stringify(values, null, 2));
+    },
+  });
+
   useEffect(() => {
     getAllFoods();
   }, [getAllFoods]);
@@ -28,9 +38,16 @@ function Foods() {
   return (
     <section className={styles.wrapper}>
       <h1 className={styles.title}>List of foods</h1>
-      <form className={styles.searchForm}>
-        <SearchInput className={styles.input} />
-        <button className={styles.button}>Search</button>
+      <form onSubmit={formik.handleSubmit} className={styles.searchForm}>
+        <SearchInput
+          name="search"
+          className={styles.input}
+          value={formik.values.search}
+          onChange={formik.handleChange}
+        />
+        <button type="submit" className={styles.button}>
+          Search
+        </button>
       </form>
       <ContentManager
         className={styles.loadingAndError}
