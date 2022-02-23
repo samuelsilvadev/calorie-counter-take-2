@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { GetAllError } from "shared/types/api";
+import { GetAllError, GetAllErrorFE } from "shared/types/api";
 import { ENDPOINTS } from "shared/utils/api";
 import { identityError } from "shared/utils/error";
 import { fetchAllFoods } from "./api";
@@ -19,9 +19,26 @@ function* getAllFoodsSaga() {
       throw response;
     }
 
+    if (response.data.length === 0) {
+      const emptyFoodsError: GetAllErrorFE = {
+        error: true,
+        name: "EmptyList",
+        message: "Foods list is empty",
+        resource: ENDPOINTS.FOODS,
+        statusCode: 204,
+        status: true,
+        responseTimestamp: Date.now().toString(),
+      };
+
+      yield put(getAllFoodsError(emptyFoodsError));
+
+      return;
+    }
+
     const payload: GetAllFoodsOkAction["payload"] = {
       foods: response.data,
     };
+
     yield put(getAllFoodsOK(payload));
   } catch (error) {
     const composedError: GetAllError | Error = error as any;
