@@ -1,0 +1,25 @@
+.wrapper {
+  margin: auto;
+  max-width: 800px;
+  width: 100%;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+}
+
+.button {
+  justify-self: flex-start;
+  background-color: #fff;
+  padding: 12px 10px;
+  border: 1px solid #bbc3cc;
+  color: #bbc3cc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+  background-color: #bbc3cc;
+  color: #fff;
+}

@@ -1,0 +1,20 @@
+.wrapper {
+  align-items: flex-start;
+  flex-direction: column;
+  display: flex;
+}
+
+.label {
+  margin-bottom: 5px;
+}
+
+.input {
+  color: #bbc3cc;
+  border: 1px solid #bbc3cc;
+  width: 100%;
+  padding: 12px 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 5px;
+  outline: none;
+}

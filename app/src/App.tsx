@@ -1,6 +1,7 @@
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch, useLocation, Link } from "react-router-dom";
 import Foods from "foods/Foods";
 import FoodDetails from "food-details/FoodDetails";
+import NewFood from "new-food/NewFood";
 import Notifications from "notifications/Notifications";
 import Navigation from "shared/components/navigation/Navigation";
 import ContentManager from "shared/components/content-manager/ContentManager";
@@ -15,7 +16,9 @@ function App() {
     <main>
       <header className={styles.header}>
         <Navigation />
-        <button className={styles.addButton}>Add new food</button>
+        <Link className={styles.addButton} to="/new-food">
+          Add new food
+        </Link>
       </header>
       <Notifications />
       <div className={styles.container}>
@@ -37,6 +40,7 @@ function App() {
               />
             )}
           />
+          <Route path="/new-food" component={NewFood} />
         </Switch>
         {previousLocation && (
           <Route path="/details/:id" component={FoodDetails} />
