@@ -44,16 +44,16 @@ function Navigation() {
     }
 
     const activeLink = findActiveLink(listRef.current);
+    const offsetLeft = activeLink ? activeLink.offsetLeft : 0;
+    const width = activeLink ? activeLink.clientWidth : 0;
 
-    if (activeLink) {
-      setProperties(
-        listRef.current,
-        new Map([
-          ["--list-item-active-offset", `${activeLink.offsetLeft}px`],
-          ["--list-item-active-width", `${activeLink.clientWidth}px`],
-        ])
-      );
-    }
+    setProperties(
+      listRef.current,
+      new Map([
+        ["--list-item-active-offset", `${offsetLeft}px`],
+        ["--list-item-active-width", `${width}px`],
+      ])
+    );
   }, [urlPathname]);
 
   useEffect(() => {
