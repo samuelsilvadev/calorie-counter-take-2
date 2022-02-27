@@ -85,7 +85,7 @@ function Navigation() {
   return (
     <nav className={styles.nav}>
       <ul ref={listRef} className={styles.list}>
-        {LINKS.map(({ label, pathname, icon: Icon }, listItemIndex) => (
+        {LINKS.map(({ label, pathname, icon: Icon }) => (
           <li
             key={pathname}
             className={styles.listItem}
