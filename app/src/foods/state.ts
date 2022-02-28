@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { saveFoodOK } from "new-food/state";
 import type { GetAllError } from "shared/types/api";
 import type { Food } from "./types";
 
@@ -32,6 +33,11 @@ const foodsSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(saveFoodOK, (state, action) => {
+      state.foods.push(action.payload.food);
+    });
   },
 });
 
