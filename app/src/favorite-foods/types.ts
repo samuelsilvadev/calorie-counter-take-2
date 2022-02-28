@@ -1,4 +1,4 @@
-import type { GetAllCommon, GetAllError } from "shared/types/api";
+import type { GetAllCommon, GetAllError, SaveError } from "shared/types/api";
 
 export type FavoriteFood = {
   id: string;
@@ -23,14 +23,7 @@ export type SaveFavoriteFoodAPIResponseOk = {
   data: FavoriteFood;
 };
 
-export type SaveFavoriteFoodAPIResponseError = {
-  error: boolean;
-  responseTimestamp: string;
-  name: string;
-  message: string;
-  statusCode: number;
-  errors: Record<string, string>;
-};
+export type SaveFavoriteFoodAPIResponseError = SaveError;
 
 export type SaveFavoriteFoodAPIResponse =
   | SaveFavoriteFoodAPIResponseOk
@@ -40,14 +33,7 @@ export type RemoveFavoriteFoodAPIResponseOk = {
   data: FavoriteFood;
 };
 
-export type RemoveFavoriteFoodAPIResponseError = {
-  error: boolean;
-  responseTimestamp: string;
-  name: string;
-  message: string;
-  statusCode: number;
-  errors: Record<string, string>;
-};
+export type RemoveFavoriteFoodAPIResponseError = SaveError;
 
 export type RemoveFavoriteFoodAPIResponse =
   | RemoveFavoriteFoodAPIResponseOk

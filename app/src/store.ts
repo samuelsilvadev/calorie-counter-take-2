@@ -7,6 +7,7 @@ import { notificationsReducer } from "notifications/state";
 import { foodDetailsReducer } from "food-details/state";
 import { favoriteFoodsReducer } from "favorite-foods/state";
 import { userReducer } from "user/state";
+import { saveFoodReducer } from "new-food/state";
 import { rootSaga } from "rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -18,6 +19,7 @@ export const store = configureStore({
     food: foodDetailsReducer,
     notifications: notificationsReducer,
     user: userReducer,
+    saveFood: saveFoodReducer,
   },
   middleware: [sagaMiddleware],
 });

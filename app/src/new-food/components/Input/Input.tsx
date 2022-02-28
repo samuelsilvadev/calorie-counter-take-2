@@ -7,7 +7,7 @@ type InputProps = {
   label: string;
   id: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  value?: string;
+  value?: string | number;
   /**
    * @default text
    */

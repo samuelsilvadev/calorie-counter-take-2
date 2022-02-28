@@ -10,6 +10,18 @@ export type GetAllError = {
   name: string;
 } & GetAllCommon;
 
+export type SaveError = {
+  error: boolean;
+  responseTimestamp: string;
+  name: string;
+  message: string;
+  statusCode: number;
+  /**
+   * { fieldName: errorMessage }
+   */
+  errors: Record<string, string>;
+};
+
 export type GetAllErrorFE = {
   /**
    * Describe which endpoint failed
