@@ -7,6 +7,7 @@ import FoodItem from "./components/FoodItem/FoodItem";
 import SearchInput from "./components/SearchInput/SearchInput";
 import { useFoods } from "./useFoods";
 import { useFavoriteFoods } from "favorite-foods/useFavoriteFoods";
+import { useDeferredLoading } from "./useDeferredLoading";
 import styles from "./foods.module.css";
 
 function Foods() {
@@ -22,6 +23,7 @@ function Foods() {
     actions: { saveFavoriteFood, removeFavoriteFood },
   } = useFavoriteFoods();
   const [searchTerm, setSearchTerm] = useState<string>();
+  const deferredLoading = useDeferredLoading({ initialLoading: true, loading });
 
   const formik = useFormik({
     initialValues: {
@@ -56,7 +58,7 @@ function Foods() {
       </form>
       <ContentManager
         className={styles.loadingAndError}
-        loading={loading}
+        loading={deferredLoading}
         error={error}
       >
         <ul className={styles.listOfFoods}>

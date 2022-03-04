@@ -35,7 +35,7 @@ The command that the script will run is the following, in case you wanna try it 
 ```bash
 docker run -d \
     -p 27017:27017 \
-    --name calorie-counter-take-2/server \
+    --name calorie-counter-take-2 \
     -v $HOME/mongo-data:/data/db \
     mongo:latest
 ```
